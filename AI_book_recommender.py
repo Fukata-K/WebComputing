@@ -13,17 +13,14 @@ def book_recommender_GPT(prompt):
     gpt_role = 'あなたは本の推薦を行うAIです．受け取ったテキストから情報からあなた自身の知識を利用して本をお勧めします．'
 
     response = openai.chat.completions.create(
-        # model='gpt-4o',
-        model='gpt-3.5-turbo',  # modelを変えるときはここを変更
+        model='gpt-3.5-turbo',
         messages=[
             {'role': 'system', 'content': gpt_role},
             {'role': 'user', 'content': prompt}
         ]
     )
 
-    answer = response.choices[0].message.content
-
-    return answer
+    return response.choices[0].message.content
 
 
 # 読みたい本のテキストでの説明と冊数を受け取り推薦図書を返す関数
@@ -33,29 +30,31 @@ def book_recommend_text(text, num_recommend_books):
     prompt += '------------------------------------------------\n'
     prompt += text
     prompt += '------------------------------------------------\n\n'
-    prompt += '必ず以下の形式に順守して回答してください．\n'
-    prompt += '推薦理由は3行程度で書いてください．\n'
-    prompt += f'必ず{num_recommend_books}冊の本を紹介してください．\n'
+    prompt += '条件は次の通りです\n'
+    prompt += '・推薦理由は3行程度で書いてください．\n'
+    prompt += f'・必ず{num_recommend_books}冊の本を紹介してください．\n'
+    prompt += '・必ず以下の形式に順守して回答してください．\n'
     prompt += '------------------------------------------------\n'
     for i in range(num_recommend_books):
         prompt += f'{i+1}冊目：『{i+1}冊目の本のタイトル』({i+1}冊目の本の著者)'
         prompt += '推薦理由：ここに推薦理由を3行程度で書いてください'
     prompt += '------------------------------------------------\n\n'
-    
+
     return book_recommender_GPT(prompt)
 
 
 # 本のリストと冊数を受け取り推薦図書を返す関数 (fav_books[i] = ['タイトル', '著者'])
 def book_recommend_list(fav_books, num_recommend_books):
-    
+
     prompt = 'あなたは選書を行うAIです．以下の本を読んだ人に対して次に読むのに適切な本を推薦してください．\n\n'
     prompt += '------------------------------------------------\n'
     for title, author in fav_books:
         prompt += f'『{title}』({author})'
     prompt += '------------------------------------------------\n\n'
-    prompt += '必ず以下の形式に順守して回答してください．\n'
-    prompt += '推薦理由は3行程度で書いてください．\n'
-    prompt += f'必ず{num_recommend_books}冊の本を紹介してください．\n'
+    prompt += '条件は次の通りです\n'
+    prompt += '・推薦理由は3行程度で書いてください．\n'
+    prompt += f'・必ず{num_recommend_books}冊の本を紹介してください．\n'
+    prompt += '・必ず以下の形式に順守して回答してください．\n'
     prompt += '------------------------------------------------\n'
     for i in range(num_recommend_books):
         prompt += f'{i+1}冊目：『{i+1}冊目の本のタイトル』({i+1}冊目の本の著者)'
@@ -87,13 +86,14 @@ def recommended_text_to_books_list(recommended_text):
     for reason in reason_matches:
         recommend_reasons_list.append(reason.strip())
 
-
+    # GPTの回答からGoogleブックスで検索を行い情報を加える
     try:
         book_info_list = []
         for book in recommended_books_list:
             book_info_list.append(search_book(book)[0])
         books_list = make_books_list(book_info_list)
 
+    # Googleブックスが動作しない時はGPTの解答をそのまま使う
     except Exception as _:
         books_list = []
         for i, book in enumerate(recommended_books_list):
@@ -106,7 +106,7 @@ def recommended_text_to_books_list(recommended_text):
     # 本の情報に推薦理由を加える
     for i, book in enumerate(books_list):
         book['推薦理由'] = recommend_reasons_list[i]
-        
+
     return books_list
 
 
@@ -114,7 +114,7 @@ def recommended_text_to_books_list(recommended_text):
 def search_text(text, num_recommend_books):
     recommended_text = book_recommend_text(text, num_recommend_books)
     books_list = recommended_text_to_books_list(recommended_text)
-    
+
     return books_list
 
 
