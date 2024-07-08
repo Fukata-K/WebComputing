@@ -7,7 +7,7 @@ from AI_book_recommender import search_text, search_fav_books_list
 
 # 0.タイトル及び説明文
 st.title('本検索/選書AIサービス')
-st.header('0. 使い方')
+st.header('0. サービスの概要')
 st.write('様々な入力形式からAIが選書を行うサービスです')
 
 
