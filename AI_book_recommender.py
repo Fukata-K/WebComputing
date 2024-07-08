@@ -101,8 +101,6 @@ def recommended_text_to_books_list(recommended_text):
             title, author = book_matches[i]
             book['タイトル'] = title
             book['著者'] = [author]
-            st.write(book_matches[i])
-            st.write(book)
             books_list.append(book)
 
     # 本の情報に推薦理由を加える
