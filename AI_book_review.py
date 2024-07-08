@@ -38,16 +38,12 @@ def book_review_GPT(book_info):
 
     prompt += "-----------------------------------------\n"
 
-
     response = openai.chat.completions.create(
-        # model="gpt-4o",
-        model="gpt-3.5-turbo",  # modelを変えるときはここを変更
+        model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": gpt_role},
             {"role": "user", "content": prompt}
         ]
     )
 
-    answer = response.choices[0].message.content
-
-    return answer
+    return response.choices[0].message.content
