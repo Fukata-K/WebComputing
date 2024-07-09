@@ -8,7 +8,7 @@ GOOGLE_BOOKS_API_KEY = st.secrets['GOOGLE_API_KEY']
 def search_book(keyword):
 
     url = "https://www.googleapis.com/books/v1/volumes"
-    params = {"q": keyword, "maxResults": 7, "key": GOOGLE_BOOKS_API_KEY}
+    params = {"q": keyword, "maxResults": 7, "key": GOOGLE_BOOKS_API_KEY, "country": "JP"}
     response = requests.get(url, params=params).json() #情報の取得,json変換
     items_list = response['items'] #items リストデータ
 
