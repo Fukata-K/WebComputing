@@ -1,11 +1,13 @@
 import streamlit as st
 import requests
+from googleapiclient.discovery import build
 
 GOOGLE_BOOKS_API_KEY = st.secrets['GOOGLE_API_KEY']
 
 
 # 文字列keywordを受け取りGoogleブックスでの検索結果をリストとして返す関数
 def search_book(keyword):
+    service = build('books', 'v1', developerKey=GOOGLE_BOOKS_API_KEY)
 
     url = "https://www.googleapis.com/books/v1/volumes"
     params = {"q": keyword, "maxResults": 7, "key": GOOGLE_BOOKS_API_KEY, "country": "JP"}
