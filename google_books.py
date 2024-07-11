@@ -36,7 +36,9 @@ def make_book_info(item):
     try: book_info['出版日'] =   item['publishedDate']
     except KeyError as _: pass
 
-    try: book_info['ページ数'] = item['pageCount']
+    try: 
+        if item['pageCount'] > 0:
+            book_info['ページ数'] = item['pageCount']
     except KeyError as _: pass
 
     try: book_info['要約'] =     item['description']
