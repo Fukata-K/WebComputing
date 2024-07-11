@@ -114,7 +114,7 @@ if submit_btn and len(books_list):
     st.write('① 楽天市場での検索結果 (あれば)')
     st.write('② YouTubeでの検索結果 (あれば)')
     st.write('③ AIによる書評')
-    st.caption('注: 簡易的な検索なので関係のないものが表示されることがあります')
+    st.error('注: 簡易的な検索なので関係のないものが表示されることがあります')
 
     for i, book in enumerate(books_list):
         st.subheader(f'{i+1}冊目:『{book["タイトル"]}』の詳細')
