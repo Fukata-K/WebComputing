@@ -70,8 +70,8 @@ if submit_btn:
         else:
             try: books_list = search_books_keyword(keyword, num_recommend_books)
             except Exception as _:
-                st.write('大変申し訳ございませんが現在キーワード検索はご利用いただけません')
-                st.write('他の検索方法をお試しください')
+                st.write('検索に失敗しました')
+                st.write('再度検索するか他の検索方法をお試しください')
 
     # 文章で検索
     if how_to_search == '文章で検索':
