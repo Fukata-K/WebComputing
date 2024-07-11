@@ -12,7 +12,7 @@ def search_youtube(keyword):
         part='snippet',
         type='video',
         regionCode="jp",
-        maxResults=5,# 5~50まで
+        maxResults=3,
     ).execute()
 
     return search_responses['items']
