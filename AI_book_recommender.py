@@ -13,7 +13,7 @@ def book_recommender_GPT(prompt):
     gpt_role = 'あなたは本の推薦を行うAIです．受け取ったテキストから情報からあなた自身の知識を利用して本をお勧めします．'
 
     response = openai.chat.completions.create(
-        model='gpt-4o',
+        model="gpt-3.5-turbo",
         messages=[
             {'role': 'system', 'content': gpt_role},
             {'role': 'user', 'content': prompt}
