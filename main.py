@@ -46,6 +46,7 @@ with st.form(key='recommend_form'):
         fav_books = []
 
         for i in range(5):
+            st.write(f'{i+1}冊目の入力')
             fav_book = st.text_input(f'{i+1}冊目のタイトル')
             fav_book_author = st.text_input(f'{i+1}冊目の著者 (省略可)')
 
